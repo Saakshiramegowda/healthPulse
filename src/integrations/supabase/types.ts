@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      health_profiles: {
+        Row: {
+          allergies: string[] | null
+          created_at: string
+          health_conditions: string[] | null
+          id: string
+          nutrition_preferences: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          allergies?: string[] | null
+          created_at?: string
+          health_conditions?: string[] | null
+          id?: string
+          nutrition_preferences?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          allergies?: string[] | null
+          created_at?: string
+          health_conditions?: string[] | null
+          id?: string
+          nutrition_preferences?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
