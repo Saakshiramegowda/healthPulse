@@ -35,7 +35,7 @@ export function LifestyleTipsCard({ tips, isLoading }: LifestyleTipsCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45 }}
     >
-      <Card className="border-border/70 bg-card/90 shadow-sm">
+      <Card className="border-border/70 bg-card/90 shadow-sm vetra-asym-card">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base editorial-heading">
             <Sparkles className="h-4 w-4 text-primary" />

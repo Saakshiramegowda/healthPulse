@@ -66,7 +66,7 @@ export function RecommendationCards({ recommendations, isLoading }: Recommendati
       description: recommendations.nutrition.description,
       meta: (
         <div className="mt-2 space-y-1">
-          <p className="text-xs text-muted-foreground font-medium">{recommendations.nutrition.meal_type}</p>
+          <p className="text-xs editorial-subtext font-medium">{recommendations.nutrition.meal_type}</p>
           <div className="flex flex-wrap gap-1">
             {recommendations.nutrition.foods.map((food) => (
               <Badge key={food} variant="outline" className="text-xs">{food}</Badge>
@@ -102,7 +102,7 @@ export function RecommendationCards({ recommendations, isLoading }: Recommendati
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.12 }}
             >
-              <Card className="h-full border-border/70 bg-card/90 hover:shadow-md transition-shadow">
+              <Card className="h-full border-border/70 bg-card/90 hover:shadow-md transition-shadow vetra-hover-lift vetra-asym-card">
                 <CardHeader className="pb-2">
                   <CardTitle className="flex items-center gap-2 text-base editorial-heading">
                     <card.icon className="h-4 w-4 text-primary" />
@@ -126,7 +126,7 @@ export function RecommendationCards({ recommendations, isLoading }: Recommendati
         transition={{ delay: 0.5 }}
         className="space-y-2"
       >
-        <div className="flex items-start gap-2 rounded-lg border border-border/60 bg-accent/50 p-3">
+        <div className="flex items-start gap-2 rounded-lg border border-border/60 bg-accent/50 p-3 vetra-cutout">
           <Info className="h-4 w-4 text-accent-foreground mt-0.5 shrink-0" />
           <p className="text-sm text-accent-foreground leading-relaxed">{recommendations.explanation}</p>
         </div>

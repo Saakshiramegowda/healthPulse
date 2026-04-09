@@ -235,4 +235,84 @@
   .editorial-image img {
     @apply h-full w-full object-cover;
   }
+
+  .vetra-frame {
+    @apply rounded-[2rem] border bg-card;
+    border-color: hsl(var(--border) / 0.82);
+    box-shadow:
+      0 22px 55px hsl(28 24% 19% / 0.14),
+      inset 0 1px 0 hsl(36 38% 98% / 0.5);
+  }
+
+  .vetra-surface {
+    background:
+      radial-gradient(circle at 12% 8%, hsl(78 24% 72% / 0.22) 0%, transparent 42%),
+      linear-gradient(180deg, hsl(36 31% 95%) 0%, hsl(35 28% 92%) 100%);
+  }
+
+  .vetra-soft-gradient {
+    background: linear-gradient(135deg, hsl(78 22% 65% / 0.2) 0%, hsl(35 30% 90% / 0.2) 65%, transparent 100%);
+  }
+
+  .vetra-asym-card {
+    border-radius: 2rem 2rem 1.15rem 2rem;
+  }
+
+  .vetra-rail-card {
+    border-radius: 1.4rem 1.4rem 2rem 1.4rem;
+  }
+
+  .vetra-cutout {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vetra-cutout::after {
+    content: "";
+    position: absolute;
+    right: -1.6rem;
+    bottom: -1.6rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 999px;
+    background: hsl(78 28% 66% / 0.15);
+  }
+
+  .vetra-hover-lift {
+    transition: transform 240ms ease, box-shadow 240ms ease;
+  }
+
+  .vetra-hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 28px 65px hsl(28 24% 19% / 0.18),
+      inset 0 1px 0 hsl(36 38% 98% / 0.5);
+  }
+
+  .vetra-star {
+    position: relative;
+  }
+
+  .vetra-star::before {
+    content: "";
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: hsl(78 26% 62% / 0.85);
+    box-shadow: 0 0 0 8px hsl(78 26% 62% / 0.14);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vetra-hover-lift,
+    .vetra-hover-lift:hover {
+      transition: none;
+      transform: none;
+      box-shadow:
+        0 22px 55px hsl(28 24% 19% / 0.14),
+        inset 0 1px 0 hsl(36 38% 98% / 0.5);
+    }
+  }
 }

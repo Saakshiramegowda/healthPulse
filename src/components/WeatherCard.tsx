@@ -28,7 +28,7 @@ export function WeatherCard({ context, isLoading }: WeatherCardProps) {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-      <Card className="overflow-hidden border-border/70 bg-card/90 shadow-sm">
+      <Card className="overflow-hidden border-border/70 bg-card/90 shadow-sm vetra-asym-card">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base editorial-heading">
             <Cloud className="h-4 w-4 text-primary" />
@@ -65,7 +65,7 @@ export function WeatherCard({ context, isLoading }: WeatherCardProps) {
           )}
 
           {aq && (
-            <div className="border-t border-border/70 pt-3 flex items-center justify-between">
+            <div className="border-t border-border/70 pt-3 flex items-center justify-between vetra-cutout">
               <div className="flex items-center gap-2">
                 <div className={`h-2.5 w-2.5 rounded-full ${aq.aqi <= 50 ? "bg-green-500" : aq.aqi <= 100 ? "bg-yellow-500" : "bg-red-500"}`} />
                 <span className="text-sm font-medium">AQI {aq.aqi}</span>

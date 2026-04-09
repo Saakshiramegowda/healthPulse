@@ -31,7 +31,7 @@ export function CalendarCard({ events, isLoading }: CalendarCardProps) {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-      <Card className="border-border/70 bg-card/90 shadow-sm">
+      <Card className="border-border/70 bg-card/90 shadow-sm vetra-rail-card">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base editorial-heading">
             <Calendar className="h-4 w-4 text-primary" />
