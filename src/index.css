@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Epilogue:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Urbanist:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Epilogue:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -120,6 +120,48 @@
   }
 }
 
+@layer base {
+  .warm-editorial {
+    --background: 35 35% 95%;
+    --foreground: 25 25% 18%;
+    --card: 34 32% 98%;
+    --card-foreground: 25 25% 18%;
+    --popover: 34 32% 98%;
+    --popover-foreground: 25 25% 18%;
+    --primary: 28 33% 37%;
+    --primary-foreground: 34 33% 97%;
+    --secondary: 31 22% 90%;
+    --secondary-foreground: 25 20% 24%;
+    --muted: 36 20% 89%;
+    --muted-foreground: 25 12% 40%;
+    --accent: 34 28% 86%;
+    --accent-foreground: 25 20% 24%;
+    --border: 31 20% 83%;
+    --input: 31 20% 85%;
+    --ring: 28 33% 37%;
+    --glow-primary: 28 33% 37%;
+    --glow-secondary: 35 35% 65%;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  .warm-editorial,
+  .warm-editorial body {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .warm-editorial h1,
+  .warm-editorial h2,
+  .warm-editorial h3,
+  .warm-editorial h4,
+  .warm-editorial h5,
+  .warm-editorial h6 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+}
+
 /* Utility classes for glow effects */
 @layer utilities {
   .glow-primary {
@@ -137,5 +179,60 @@
     background: radial-gradient(at 20% 80%, hsl(160 82% 50% / 0.08) 0%, transparent 50%),
                 radial-gradient(at 80% 20%, hsl(140 90% 72% / 0.06) 0%, transparent 50%),
                 radial-gradient(at 50% 50%, hsl(210 30% 7%) 0%, hsl(210 30% 5%) 100%);
+  }
+
+  .warm-bg {
+    background:
+      linear-gradient(180deg, hsl(36 35% 93%) 0%, hsl(34 28% 95%) 40%, hsl(36 30% 92%) 100%);
+  }
+
+  .editorial-heading {
+    @apply leading-[1.05] tracking-tight;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+  }
+
+  .editorial-subtext {
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.01em;
+  }
+
+  .editorial-card {
+    @apply rounded-2xl border bg-card;
+    border-color: hsl(var(--border) / 0.75);
+    box-shadow: 0 10px 36px hsl(28 22% 20% / 0.07);
+  }
+
+  .editorial-panel {
+    @apply rounded-3xl border bg-card;
+    border-color: hsl(var(--border) / 0.7);
+    box-shadow: 0 22px 64px hsl(28 22% 20% / 0.12);
+  }
+
+  .editorial-chip {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium;
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    border: 1px solid hsl(var(--border) / 0.75);
+  }
+
+  .editorial-button {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 8px 22px hsl(28 24% 26% / 0.22);
+  }
+
+  .editorial-button:hover {
+    filter: brightness(1.06);
+  }
+
+  .editorial-image {
+    @apply overflow-hidden rounded-2xl border;
+    border-color: hsl(var(--border) / 0.7);
+    background: hsl(var(--muted));
+  }
+
+  .editorial-image img {
+    @apply h-full w-full object-cover;
   }
 }

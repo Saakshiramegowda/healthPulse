@@ -27,7 +27,7 @@ export function RecommendationCards({ recommendations, isLoading }: Recommendati
   if (isLoading) {
     return (
       <div className="space-y-4">
-        <h2 className="text-lg font-semibold tracking-tight">Your Daily Plan</h2>
+        <h2 className="text-lg editorial-heading tracking-tight">Your Daily Plan</h2>
         <div className="grid gap-4 md:grid-cols-3">
           {[1, 2, 3].map((i) => (
             <Card key={i}>
@@ -86,7 +86,7 @@ export function RecommendationCards({ recommendations, isLoading }: Recommendati
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold tracking-tight">Your Daily Plan</h2>
+      <h2 className="text-lg editorial-heading tracking-tight">Your Daily Plan</h2>
       <AnimatePresence mode="wait">
         <motion.div
           key={recommendations.mood}
@@ -102,15 +102,15 @@ export function RecommendationCards({ recommendations, isLoading }: Recommendati
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.12 }}
             >
-              <Card className="h-full hover:shadow-md transition-shadow">
+              <Card className="h-full border-border/70 bg-card/90 hover:shadow-md transition-shadow">
                 <CardHeader className="pb-2">
-                  <CardTitle className="flex items-center gap-2 text-base">
+                  <CardTitle className="flex items-center gap-2 text-base editorial-heading">
                     <card.icon className="h-4 w-4 text-primary" />
                     {card.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{card.description}</p>
+                  <p className="text-sm editorial-subtext leading-relaxed">{card.description}</p>
                   {card.meta}
                 </CardContent>
               </Card>
@@ -126,11 +126,11 @@ export function RecommendationCards({ recommendations, isLoading }: Recommendati
         transition={{ delay: 0.5 }}
         className="space-y-2"
       >
-        <div className="flex items-start gap-2 rounded-lg bg-accent/50 p-3">
+        <div className="flex items-start gap-2 rounded-lg border border-border/60 bg-accent/50 p-3">
           <Info className="h-4 w-4 text-accent-foreground mt-0.5 shrink-0" />
           <p className="text-sm text-accent-foreground leading-relaxed">{recommendations.explanation}</p>
         </div>
-        <p className="text-xs text-muted-foreground text-center">{recommendations.disclaimer}</p>
+        <p className="text-xs editorial-subtext text-center">{recommendations.disclaimer}</p>
       </motion.div>
     </div>
   );

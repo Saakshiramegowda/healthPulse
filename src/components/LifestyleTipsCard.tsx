@@ -12,7 +12,7 @@ interface LifestyleTipsCardProps {
 export function LifestyleTipsCard({ tips, isLoading }: LifestyleTipsCardProps) {
   if (isLoading) {
     return (
-      <Card>
+      <Card className="border-border/70 bg-card/90">
         <CardHeader>
           <Skeleton className="h-5 w-48" />
         </CardHeader>
@@ -35,13 +35,13 @@ export function LifestyleTipsCard({ tips, isLoading }: LifestyleTipsCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45 }}
     >
-      <Card className="border-primary/20 bg-card/60">
+      <Card className="border-border/70 bg-card/90 shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-base">
+          <CardTitle className="flex items-center gap-2 text-base editorial-heading">
             <Sparkles className="h-4 w-4 text-primary" />
             Lifestyle tips from today&apos;s environment
           </CardTitle>
-          <p className="text-xs text-muted-foreground font-normal">
+          <p className="text-xs editorial-subtext font-normal">
             Practical habits based on weather and air — not medical advice.
           </p>
         </CardHeader>
@@ -53,10 +53,10 @@ export function LifestyleTipsCard({ tips, isLoading }: LifestyleTipsCardProps) {
                 initial={{ opacity: 0, x: -6 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="rounded-lg border border-border/60 bg-background/50 px-3 py-2.5"
+                className="rounded-lg border border-border/60 bg-background/65 px-3 py-2.5"
               >
                 <p className="text-sm font-medium leading-snug">{tip.headline}</p>
-                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{tip.detail}</p>
+                <p className="text-xs editorial-subtext mt-1 leading-relaxed">{tip.detail}</p>
               </motion.li>
             ))}
           </ul>

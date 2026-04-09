@@ -20,7 +20,7 @@ function formatTime(dateStr: string): string {
 export function CalendarCard({ events, isLoading }: CalendarCardProps) {
   if (isLoading) {
     return (
-      <Card>
+      <Card className="border-border/70 bg-card/90">
         <CardHeader><Skeleton className="h-5 w-32" /></CardHeader>
         <CardContent className="space-y-3">
           {[1, 2, 3].map((i) => <Skeleton key={i} className="h-14 w-full" />)}
@@ -31,21 +31,21 @@ export function CalendarCard({ events, isLoading }: CalendarCardProps) {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-      <Card>
+      <Card className="border-border/70 bg-card/90 shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-base">
+          <CardTitle className="flex items-center gap-2 text-base editorial-heading">
             <Calendar className="h-4 w-4 text-primary" />
             Upcoming Events
           </CardTitle>
-          <p className="text-xs text-muted-foreground font-normal">
+          <p className="text-xs editorial-subtext font-normal">
             {events.length > 0
-              ? `${events.length} upcoming — kept with your session for calendar features`
+              ? `${events.length} upcoming — aligned with your day`
               : "Connect Google Calendar later to see events here"}
           </p>
         </CardHeader>
         <CardContent>
           {events.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-4 text-center">No upcoming events</p>
+            <p className="text-sm editorial-subtext py-4 text-center">No upcoming events</p>
           ) : (
             <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
               {events.slice(0, 20).map((event, i) => (
@@ -54,17 +54,17 @@ export function CalendarCard({ events, isLoading }: CalendarCardProps) {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  className="flex items-start gap-3 rounded-lg bg-secondary/50 p-3"
+                  className="flex items-start gap-3 rounded-lg border border-border/60 bg-secondary/40 p-3"
                 >
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{event.summary}</p>
                     <div className="flex items-center gap-3 mt-1">
-                      <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1 text-xs editorial-subtext">
                         <Clock className="h-3 w-3" />
                         {formatTime(event.start)}
                       </span>
                       {event.location && (
-                        <span className="flex items-center gap-1 text-xs text-muted-foreground truncate">
+                        <span className="flex items-center gap-1 text-xs editorial-subtext truncate">
                           <MapPin className="h-3 w-3" />
                           {event.location}
                         </span>

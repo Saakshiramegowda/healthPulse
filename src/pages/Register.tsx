@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, Mail, Lock, User, Loader2, Plus, X } from "lucide-react";
+import { Heart, Mail, Lock, User, Loader2, Plus, X, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -115,6 +115,7 @@ const Register = () => {
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          className="border-border/70 bg-background/70"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -122,14 +123,14 @@ const Register = () => {
             }
           }}
         />
-        <Button type="button" variant="outline" size="icon" onClick={onAdd}>
+        <Button type="button" variant="outline" size="icon" onClick={onAdd} className="border-border/80">
           <Plus className="h-4 w-4" />
         </Button>
       </div>
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-2">
           {tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="gap-1 pr-1">
+            <Badge key={tag} variant="secondary" className="gap-1 pr-1 bg-secondary border border-border/70">
               {tag}
               <button type="button" onClick={() => onRemove(tag)} className="ml-0.5 rounded-full hover:bg-muted p-0.5">
                 <X className="h-3 w-3" />
@@ -142,35 +143,45 @@ const Register = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background gradient-mesh flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
-      >
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <Heart className="h-7 w-7 text-primary fill-primary" />
-            <span className="text-xl font-bold">PatientPulse</span>
-          </Link>
-          <h1 className="text-3xl font-bold mb-2">Create your account</h1>
-          <p className="text-muted-foreground">
-            {step === 1 ? "Start with your credentials" : "Tell us about your health (optional)"}
-          </p>
-        </div>
+    <div className="min-h-screen warm-editorial warm-bg p-4 md:p-6">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mx-auto w-full max-w-6xl">
+        <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <section className="editorial-panel p-6 md:p-8 flex flex-col">
+            <Link to="/" className="inline-flex items-center gap-2 mb-8 w-fit">
+              <Heart className="h-7 w-7 text-primary" />
+              <span className="text-xl font-semibold">HealthPulse</span>
+            </Link>
+            <p className="editorial-chip mb-5 w-fit">Personalized routines built around your day</p>
+            <h1 className="editorial-heading text-5xl md:text-6xl mb-5">
+              Start your HealthPulse journey.
+            </h1>
+            <p className="editorial-subtext text-base md:text-lg max-w-xl mb-8">
+              Create your account in two simple steps: secure sign-up first, then optional health preferences for better recommendations.
+            </p>
+            <div className="editorial-image min-h-[260px] md:min-h-[360px] mt-auto">
+              <img
+                src="https://images.unsplash.com/photo-1474418397713-7ede21d49118?auto=format&fit=crop&w=1400&q=80"
+                alt="Warm and calming wellness scene"
+                loading="lazy"
+              />
+            </div>
+          </section>
 
-        {/* Step indicator */}
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <div className={`h-2 w-12 rounded-full ${step >= 1 ? "bg-primary" : "bg-muted"}`} />
-          <div className={`h-2 w-12 rounded-full ${step >= 2 ? "bg-primary" : "bg-muted"}`} />
-        </div>
+          <section className="editorial-panel p-6 md:p-8 lg:p-10">
+            <h2 className="editorial-heading text-4xl mb-2">Create account</h2>
+            <p className="editorial-subtext mb-4">
+              {step === 1 ? "Step 1 of 2: account details" : "Step 2 of 2: health profile (optional)"}
+            </p>
+            <div className="flex items-center gap-2 mb-6">
+              <div className={`h-2 w-12 rounded-full ${step >= 1 ? "bg-primary" : "bg-muted"}`} />
+              <div className={`h-2 w-12 rounded-full ${step >= 2 ? "bg-primary" : "bg-muted"}`} />
+            </div>
 
-        <div className="rounded-xl border border-border/50 bg-card/80 backdrop-blur-md p-8">
           {step === 1 && (
             <>
               <Button
                 variant="outline"
-                className="w-full mb-6 gap-2"
+                className="w-full mb-6 gap-2 border-border/80 bg-card"
                 onClick={handleGoogle}
                 disabled={googleLoading}
               >
@@ -190,7 +201,7 @@ const Register = () => {
                   <span className="w-full border-t border-border/50" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-card px-2 text-muted-foreground">or</span>
+                  <span className="bg-card px-2 editorial-subtext">or use email</span>
                 </div>
               </div>
 
@@ -209,24 +220,24 @@ const Register = () => {
                   <Label htmlFor="name">Display Name</Label>
                   <div className="relative">
                     <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input id="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} className="pl-10" />
+                    <Input id="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} className="pl-10 border-border/70 bg-background/70" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="pl-10" required />
+                    <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="pl-10 border-border/70 bg-background/70" required />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="password">Password</Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input id="password" type="password" placeholder="Min 6 characters" value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10" required minLength={6} />
+                    <Input id="password" type="password" placeholder="Min 6 characters" value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10 border-border/70 bg-background/70" required minLength={6} />
                   </div>
                 </div>
-                <Button type="submit" className="w-full glow-primary">
+                <Button type="submit" className="w-full editorial-button">
                   Continue
                 </Button>
               </form>
@@ -263,17 +274,17 @@ const Register = () => {
                 onRemove={(v) => removeTag(v, preferences, setPreferences)}
               />
               <div className="flex gap-3 pt-2">
-                <Button type="button" variant="outline" className="flex-1" onClick={() => setStep(1)}>
+                <Button type="button" variant="outline" className="flex-1 border-border/80" onClick={() => setStep(1)}>
                   Back
                 </Button>
-                <Button type="submit" className="flex-1 glow-primary" disabled={loading}>
+                <Button type="submit" className="flex-1 editorial-button" disabled={loading}>
                   {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                   Create Account
                 </Button>
               </div>
               <button
                 type="button"
-                className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="w-full text-sm editorial-subtext hover:text-foreground transition-colors"
                 onClick={handleSignUp}
               >
                 Skip for now →
@@ -282,13 +293,21 @@ const Register = () => {
           )}
 
           {step === 1 && (
-            <p className="text-center text-sm text-muted-foreground mt-6">
+            <div className="mt-6 rounded-xl border border-border/70 bg-secondary/40 p-3 text-sm editorial-subtext flex items-start gap-2">
+              <ShieldCheck className="h-4 w-4 mt-0.5 text-primary shrink-0" />
+              <p>You can start quickly now and refine your health profile anytime from your dashboard.</p>
+            </div>
+          )}
+
+          {step === 1 && (
+            <p className="text-center text-sm editorial-subtext mt-6">
               Already have an account?{" "}
               <Link to="/login" className="text-primary hover:underline">
                 Sign in
               </Link>
             </p>
           )}
+          </section>
         </div>
       </motion.div>
     </div>

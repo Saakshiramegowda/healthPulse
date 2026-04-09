@@ -62,7 +62,7 @@ export function GoogleCalendarConnect({ onSessionUpdated }: GoogleCalendarConnec
         <div className="flex items-center gap-2 text-sm">
           <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
           <span>
-            Google Calendar is connected. Events load with your next refresh.
+            Google Calendar is connected. HealthPulse will include upcoming events on refresh.
           </span>
         </div>
         <Button type="button" variant="outline" size="sm" onClick={() => onSessionUpdated?.()} className="gap-1.5">
@@ -78,7 +78,7 @@ export function GoogleCalendarConnect({ onSessionUpdated }: GoogleCalendarConnec
       <div className="flex items-start gap-2 text-sm text-muted-foreground max-w-xl">
         <Calendar className="h-4 w-4 shrink-0 mt-0.5 text-primary" />
         <span>
-          Connect Google Calendar to show upcoming events in your health pulse. We only request read access to your
+          Connect Google Calendar to include upcoming events in your daily HealthPulse. We only request read access to your
           calendar.
         </span>
       </div>
