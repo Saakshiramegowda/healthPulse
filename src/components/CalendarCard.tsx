@@ -37,15 +37,20 @@ export function CalendarCard({ events, isLoading }: CalendarCardProps) {
             <Calendar className="h-4 w-4 text-primary" />
             Upcoming Events
           </CardTitle>
+          <p className="text-xs text-muted-foreground font-normal">
+            {events.length > 0
+              ? `${events.length} upcoming — kept with your session for calendar features`
+              : "Connect Google Calendar later to see events here"}
+          </p>
         </CardHeader>
         <CardContent>
           {events.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4 text-center">No upcoming events</p>
           ) : (
-            <div className="space-y-2">
-              {events.slice(0, 4).map((event, i) => (
+            <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+              {events.slice(0, 20).map((event, i) => (
                 <motion.div
-                  key={i}
+                  key={event.id ?? `${event.start}-${event.summary}-${i}`}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08 }}

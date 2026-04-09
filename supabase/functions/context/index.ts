@@ -138,6 +138,7 @@ serve(async (req) => {
         if (calRes.ok) {
           const calData = await calRes.json();
           calendarEvents = (calData.items ?? []).map((e: any) => ({
+            id: e.id,
             summary: e.summary ?? "Untitled",
             start: e.start?.dateTime ?? e.start?.date ?? "",
             end: e.end?.dateTime ?? e.end?.date ?? "",

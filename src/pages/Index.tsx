@@ -6,6 +6,7 @@ import { MoodSelector } from "@/components/MoodSelector";
 import { WeatherCard } from "@/components/WeatherCard";
 import { CalendarCard } from "@/components/CalendarCard";
 import { RecommendationCards } from "@/components/RecommendationCards";
+import { LifestyleTipsCard } from "@/components/LifestyleTipsCard";
 import { useHealthData } from "@/hooks/use-health-data";
 import type { Mood, HealthProfile } from "@/types/health";
 
@@ -98,6 +99,10 @@ const Index = () => {
         <section className="grid gap-4 md:grid-cols-2">
           <WeatherCard context={context} isLoading={isLoadingContext} />
           <CalendarCard events={context?.calendar_events ?? []} isLoading={isLoadingContext} />
+        </section>
+
+        <section>
+          <LifestyleTipsCard tips={context?.lifestyle_tips ?? []} isLoading={isLoadingContext} />
         </section>
 
         {/* Recommendations */}

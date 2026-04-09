@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
+import { signInWithGoogleForCalendar } from "@/lib/google-calendar";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const Register = () => {
     }
     setLoading(true);
     const { data, error } = await supabase.auth.signUp({
-      email: email.trim(),
+      email: email.trim().toLowerCase(),
       password,
       options: { data: { display_name: name.trim() }, emailRedirectTo: window.location.origin },
     });
@@ -62,8 +62,13 @@ const Register = () => {
       await saveHealthProfile(data.user.id);
     }
     setLoading(false);
-    toast({ title: "Account created!", description: "Check your email to confirm your account." });
-    navigate("/login");
+    if (data.session) {
+      toast({ title: "Account created!", description: "You are now signed in." });
+      navigate("/dashboard", { replace: true });
+      return;
+    }
+    toast({ title: "Account created!", description: "Check your email to confirm your account before signing in." });
+    navigate("/login", { replace: true });
   };
 
   const saveHealthProfile = async (userId: string) => {
@@ -77,16 +82,13 @@ const Register = () => {
 
   const handleGoogle = async () => {
     setGoogleLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) {
+    const { error } = await signInWithGoogleForCalendar();
+    if (error) {
       setGoogleLoading(false);
-      toast({ title: "Google sign-up failed", description: String(result.error), variant: "destructive" });
+      toast({ title: "Google sign-up failed", description: error.message, variant: "destructive" });
       return;
     }
-    if (result.redirected) return;
-    navigate("/dashboard");
+    // Redirect to Google, then /dashboard — save health profile after first load if needed.
   };
 
   const TagInput = ({

@@ -21,6 +21,15 @@ export interface WeatherData {
   description: string;
   icon: string;
   wind_speed: number;
+  /** UV index when available (e.g. Open-Meteo / OpenWeather). */
+  uv_index?: number;
+}
+
+/** Short lifestyle guidance derived from environment (not a diagnosis). */
+export interface LifestyleTip {
+  id: string;
+  headline: string;
+  detail: string;
 }
 
 export interface AirQualityData {
@@ -36,6 +45,8 @@ export interface CalendarEvent {
   start: string;
   end: string;
   location?: string;
+  /** Set when syncing from Google Calendar for stable keys. */
+  id?: string;
 }
 
 export interface ContextData {
@@ -43,12 +54,15 @@ export interface ContextData {
   location: { lat: number; lon: number };
   weather: WeatherData | null;
   air_quality: AirQualityData | null;
+  /** Upcoming events from Google Calendar when connected; preserved for richer scheduling features. */
   calendar_events: CalendarEvent[];
   data_availability: {
     weather: boolean;
     air_quality: boolean;
     calendar: boolean;
   };
+  /** Rule-based tips from current weather + air + schedule (client-computed). */
+  lifestyle_tips: LifestyleTip[];
 }
 
 export interface ExerciseRec {

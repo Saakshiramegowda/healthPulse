@@ -51,6 +51,9 @@ Environmental context:
 - Weather: ${context.weather ? `${context.weather.temp}°C, ${context.weather.description}, humidity ${context.weather.humidity}%` : "Data unavailable"}
 - Air Quality: ${context.air_quality ? `AQI ${context.air_quality.aqi} (${context.air_quality.category}), Pollen: ${context.air_quality.pollen_level || "Unknown"}` : "Data unavailable"}
 - Upcoming events: ${context.calendar_events?.length > 0 ? context.calendar_events.slice(0, 3).map((e: any) => e.summary).join(", ") : "No upcoming events"}
+- Environment lifestyle tips (already computed for the user): ${Array.isArray(context.lifestyle_tips) && context.lifestyle_tips.length > 0 ? context.lifestyle_tips.map((t: { headline: string }) => t.headline).join("; ") : "None"}
+
+Align exercise/nutrition/caution with these conditions when sensible; do not contradict medical disclaimers.
 
 Based on these parameters, suggest 1 exercise plan, 1 nutrition recommendation, and 1 safety/environmental caution.`;
 

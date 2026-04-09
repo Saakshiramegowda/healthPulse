@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
+import { signInWithGoogleForCalendar } from "@/lib/google-calendar";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,31 +17,39 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
+  const getLoginErrorMessage = (message: string) => {
+    const normalized = message.toLowerCase();
+    if (normalized.includes("email not confirmed")) {
+      return "Please confirm your email first, then try signing in again.";
+    }
+    if (normalized.includes("invalid login credentials")) {
+      return "Invalid email or password. If you just signed up, confirm your email first.";
+    }
+    return message;
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password) return;
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password });
     setLoading(false);
     if (error) {
-      toast({ title: "Sign in failed", description: error.message, variant: "destructive" });
+      toast({ title: "Sign in failed", description: getLoginErrorMessage(error.message), variant: "destructive" });
     } else {
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
     }
   };
 
   const handleGoogle = async () => {
     setGoogleLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) {
+    const { error } = await signInWithGoogleForCalendar();
+    if (error) {
       setGoogleLoading(false);
-      toast({ title: "Google sign-in failed", description: String(result.error), variant: "destructive" });
+      toast({ title: "Google sign-in failed", description: error.message, variant: "destructive" });
       return;
     }
-    if (result.redirected) return;
-    navigate("/dashboard");
+    // Browser redirects to Google, then back to /dashboard with a session + calendar scope token.
   };
 
   return (

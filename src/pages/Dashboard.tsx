@@ -1,13 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { RefreshCw, Heart, LogOut, Settings } from "lucide-react";
+import { RefreshCw, Heart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MoodSelector } from "@/components/MoodSelector";
 import { WeatherCard } from "@/components/WeatherCard";
 import { CalendarCard } from "@/components/CalendarCard";
 import { RecommendationCards } from "@/components/RecommendationCards";
+import { LifestyleTipsCard } from "@/components/LifestyleTipsCard";
 import { useHealthData } from "@/hooks/use-health-data";
 import { supabase } from "@/integrations/supabase/client";
+import { getGoogleAccessTokenFromSession } from "@/lib/google-calendar";
+import { GoogleCalendarConnect } from "@/components/GoogleCalendarConnect";
 import { useNavigate } from "react-router-dom";
 import type { Mood, HealthProfile } from "@/types/health";
 
@@ -23,6 +26,24 @@ const Dashboard = () => {
   const [profile, setProfile] = useState<HealthProfile>(DEFAULT_PROFILE);
   const [userName, setUserName] = useState("");
   const { context, recommendations, isLoadingContext, isLoadingRecs, fetchContext, fetchRecommendations } = useHealthData();
+
+  const loadContext = useCallback(async () => {
+    const googleToken = await getGoogleAccessTokenFromSession();
+    let lat = 40.7128, lon = -74.006;
+    try {
+      const pos = await new Promise<GeolocationPosition>((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 })
+      );
+      lat = pos.coords.latitude;
+      lon = pos.coords.longitude;
+    } catch {
+      // fallback
+    }
+    const ctx = await fetchContext(lat, lon, googleToken ?? undefined);
+    if (ctx) {
+      await fetchRecommendations(ctx, mood, profile);
+    }
+  }, [fetchContext, fetchRecommendations, mood, profile]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-mood", mood);
@@ -51,25 +72,21 @@ const Dashboard = () => {
   }, [navigate]);
 
   useEffect(() => {
-    loadContext();
+    void loadContext();
+    // Initial dashboard load only; use Refresh or Google reconnect for updates.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadContext = useCallback(async () => {
-    let lat = 40.7128, lon = -74.006;
-    try {
-      const pos = await new Promise<GeolocationPosition>((resolve, reject) =>
-        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 })
-      );
-      lat = pos.coords.latitude;
-      lon = pos.coords.longitude;
-    } catch {
-      // fallback
-    }
-    const ctx = await fetchContext(lat, lon);
-    if (ctx) {
-      await fetchRecommendations(ctx, mood, profile);
-    }
-  }, [fetchContext, fetchRecommendations, mood, profile]);
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN") {
+        void loadContext();
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [loadContext]);
 
   const handleMoodChange = async (newMood: Mood) => {
     setMood(newMood);
@@ -131,10 +148,16 @@ const Dashboard = () => {
           <MoodSelector selected={mood} onSelect={handleMoodChange} />
         </motion.section>
 
+        <GoogleCalendarConnect onSessionUpdated={loadContext} />
+
         {/* Context Section */}
         <section className="grid gap-4 md:grid-cols-2">
           <WeatherCard context={context} isLoading={isLoadingContext} />
           <CalendarCard events={context?.calendar_events ?? []} isLoading={isLoadingContext} />
+        </section>
+
+        <section>
+          <LifestyleTipsCard tips={context?.lifestyle_tips ?? []} isLoading={isLoadingContext} />
         </section>
 
         {/* Recommendations */}
